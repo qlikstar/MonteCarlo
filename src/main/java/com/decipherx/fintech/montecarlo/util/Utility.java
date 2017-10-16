@@ -2,7 +2,6 @@ package com.decipherx.fintech.montecarlo.util;
 
 import com.decipherx.fintech.montecarlo.DTO.JSObject;
 import com.decipherx.fintech.montecarlo.DTO.PortfolioResult;
-import com.decipherx.fintech.montecarlo.enums.Portfolio;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -59,7 +58,7 @@ public class Utility {
 
 
         portfolioPercentile.add(0, header);
-        logger.info("Result Obtained: " +portfolioPercentile.toString());
+        logger.debug("Result Obtained: " +portfolioPercentile.toString());
         jsObject.setPortfolioPercentile(portfolioPercentile);
         jsObject.setPortfolioTypes(portfolioTypes);
 

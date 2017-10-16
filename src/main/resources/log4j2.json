@@ -4,7 +4,7 @@
     "name": "MonteCarloSimulation",
     "packages": "com.decipherx.fintech.montecarlo",
     "ThresholdFilter": {
-      "level": "debug"
+      "level": "info"
     },
     "appenders": {
       "Console": {
@@ -16,7 +16,7 @@
     },
     "loggers": {
       "root": {
-        "level": "debug",
+        "level": "info",
         "AppenderRef": {
           "ref": "STDOUT"
         }

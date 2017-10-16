@@ -12,13 +12,13 @@ correlations across them – we come up with the risk and return of the
 overall portfolio.  Two portfolios were created, one being extremely
 Conservative and one being Aggressive.
 
-
-##Portfolio Type					Aggressive		Very Conservative
+```
+Portfolio Type					Aggressive		Very Conservative
 
 Return (Mean)					%9.4324			%6.189
 
 Risk ( Standard Deviation)		15.675			6.3438
-
+```
 
 We would now like to compare their performance against each other. We would
 like to know that if a user with $100,000 invested their money in either of
@@ -27,7 +27,7 @@ test their performance by using forward-looking Monte Carlo Simulations.
 
 
 
-Monte Carlo Simulation:
+##Monte Carlo Simulation:
 
 This is a statistical technique that uses pseudo-random uniform variables
 for a given statistical distribution based on past risk (SD) and return
@@ -49,24 +49,43 @@ distribution of random numbers that are generated.
 
 
 
-##Solution Needed
+###Solution Needed
 
-1.     Portfolio Inflation Adjusted Values from Simulation
+1. Portfolio Inflation Adjusted Values from Simulation
 
-Portfolio Type   Median 20th Year
+    Portfolio Type   Median 20th Year
 
-10 % Best Case
+    10 % Best Case
 
-10 % Worst Case
+    10 % Worst Case
+
+    A - Aggressive
+
+    I - Very Conservative
 
 
-A - Aggressive
-
-I - Very Conservative
-
-
-##Description
+###Description
 
 10% Best Case   :   90th Percentile value among the 10,000 simulations
 
-10% Worst Case  :  10th Percentile value among the 10,000simulations.
+10% Worst Case  :  10th Percentile value among the 10,000 simulations.
+
+
+##Solution
+
+--------------------------------------------------------------------------------------------
+```
+Step 1 : Download the code from this Github repository
+
+Step 2 : Go to the downloaded code directory
+$ cd montecarlo
+
+Step 3 : Run the following command. This should generate the jar file
+$ mvn clean install
+
+Step 4 : Run the jar file
+$ java -jar target/montecarlo-0.0.1-SNAPSHOT.jar
+
+This should ideally start the Tomcat server at port 8080. You can also change the default port, if needed.
+```
+--------------------------------------------------------------------------------------------

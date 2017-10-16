@@ -2,7 +2,6 @@ package com.decipherx.fintech.montecarlo.serviceimpl;
 
 import com.decipherx.fintech.montecarlo.DTO.PortfolioResult;
 import com.decipherx.fintech.montecarlo.Exception.IllegalPercentileException;
-import com.decipherx.fintech.montecarlo.Exception.MonteCarloException;
 import com.decipherx.fintech.montecarlo.enums.Portfolio;
 import com.decipherx.fintech.montecarlo.service.Distribution;
 import com.decipherx.fintech.montecarlo.service.Simulator;
@@ -82,8 +81,6 @@ public class SimulatorImpl implements Simulator {
             distribution.processData(this.investedAmt, this.portfolio.getMean(), this.portfolio.getStandardDeviation(), this.noOfYears);
             iterationValues[i] = distribution.getFinalAssetValueEndOfPeriod();
         }
-        logger.info("values " + Arrays.toString(this.iterationValues) );
-        logger.info("length " + Integer.toString(this.iterationValues.length) + "--> "+ this.portfolio.getPortfolioName());
         Arrays.sort(this.iterationValues);
 
     }
