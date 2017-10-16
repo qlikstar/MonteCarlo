@@ -5,7 +5,6 @@ stock, an investor can reap the benefits of diversification- chief among
 them, a reduction in the riskiness of the portfolio.
 
 
-
 A Real Time implementation of Modern Portfolio Theory is to build an optimal
 asset allocation of domestic stocks & bonds, international stock and bonds,
 alternatives and cash. Combining the risk & return of each asset class and
@@ -14,15 +13,11 @@ overall portfolio.  Two portfolios were created, one being extremely
 Conservative and one being Aggressive.
 
 
-
-
-Portfolio Type					Aggressive		Very Conservative
+##Portfolio Type					Aggressive		Very Conservative
 
 Return (Mean)					%9.4324			%6.189
 
 Risk ( Standard Deviation)		15.675			6.3438
-
-
 
 
 We would now like to compare their performance against each other. We would
@@ -45,23 +40,18 @@ value over 20 years. We would like to run 10,000 simulations of projecting
 
 Assumptions
 
-1.     We would like to use a random number generator to ensure Gaussian
+1. We would like to use a random number generator to ensure Gaussian
 distribution of random numbers that are generated.
 
 
-2.     20th Year future value should be inflation adjusted at the rate of
+2. 20th Year future value should be inflation adjusted at the rate of
 3.5% each year. Ie. Year 1 value of 103.5 is equivalent to 100 at Year 0.
 
 
 
-Solution Needed
-
-
+##Solution Needed
 
 1.     Portfolio Inflation Adjusted Values from Simulation
-
-
-
 
 Portfolio Type   Median 20th Year
 
@@ -75,7 +65,7 @@ A - Aggressive
 I - Very Conservative
 
 
-Description
+##Description
 
 10% Best Case   :   90th Percentile value among the 10,000 simulations
 

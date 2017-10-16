@@ -9,6 +9,13 @@ public interface Simulator {
     /**
      *
      * @param investedAmt
+     * @param noOfYears
+     * @param portfolio
+     */
+    public void getAllIterations(Double investedAmt, int noOfYears, Portfolio portfolio);
+    /**
+     *
+     * @param investedAmt
      * @param portfolio
      * @return
      */

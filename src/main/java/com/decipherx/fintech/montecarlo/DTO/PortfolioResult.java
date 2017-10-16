@@ -14,7 +14,7 @@ public class PortfolioResult {
 
     private Double percentile90OfIterations;
 
-    private Double[] medianOfIterationsForYears;
+    private Double[] listOfAllPercentiles;
 
     public Portfolio getPortfolio() {
         return portfolio;
@@ -56,12 +56,12 @@ public class PortfolioResult {
         this.percentile90OfIterations = percentile90OfIterations;
     }
 
-    public Double[] getMedianOfIterationsForYears() {
-        return medianOfIterationsForYears;
+    public Double[] getListOfAllPercentiles() {
+        return listOfAllPercentiles;
     }
 
-    public void setMedianOfIterationsForYears(Double[] medianOfIterationsForYears) {
-        this.medianOfIterationsForYears = medianOfIterationsForYears;
+    public void setListOfAllPercentiles(Double[] listOfAllPercentiles) {
+        this.listOfAllPercentiles = listOfAllPercentiles;
     }
 
     public PortfolioResult() {

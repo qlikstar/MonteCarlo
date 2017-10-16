@@ -1,11 +1,108 @@
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"></link>
+</head>
+<body>
+        <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">Portfolio Analysis - 10,000 Simulations</a>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                <span class="navbar-text">
+              More details
+            </span>
+            </div>
+        </nav>
+        <div class="row">
+            <section class="col-lg-1"></section>
+            <section class="col-lg-10 connectedSortable ui-sortable">
+            <div id="chart_div" style="width: 80%; height: 400px;"></div>
+            </section>
+
+        </div>
+        <div class="row">
+            <section class="col-lg-1"></section>
+            <section class="col-lg-10 connectedSortable ui-sortable">
+            <div id="table_div">
+
+            </div>
+            </section>
+        </div>
 
 
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-<script src="/graph.js">
+</body>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript" >
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var arraydata;
+        $.ajax({
+            url : "/portfolio",
+            type: "GET",
+            success: function(data, textStatus, jqXHR)
+            {
+                //console.log(data.result);
+                graphdata = data.result.portfolioPercentile;
+                dataforlist = data.result.portfolioTypes;
+                var data = google.visualization.arrayToDataTable(graphdata);
+                var formatter = new google.visualization.NumberFormat(
+                    {negativeColor: 'red', negativeParens: true, pattern: '$##,###,###'});
+                formatter.format(data, 1);
+                var options = {
+                    title: 'Median Portfolio Performance for $1,000,000 for 20 years',
+                    hAxis: {title: 'Percentile',  titleTextStyle: {color: '#333'}},
+                    vAxis: {minValue: 0, format: '$#,###,###'}
+                };
+                var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+
+                $('#table_div').append(arrayToTable(dataforlist));
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+
+            }
+        });
+
+    }
+
+    function arrayToTable(tableData) {
+        var table = $('<table  class="table table-striped" style="width: 80%"><thead>\n' +
+            '                    <tr>\n' +
+            '                        <th>Portfolio Type</th>\n' +
+            '                        <th>Return (Mean)</th>\n' +
+            '                        <th>Risk (Standard Deviation)</th>\n' +
+            '                        <th>Mean Asset Value</th>\n' +
+            '                        <th>Median Asset Value</th>\n' +
+            '                        <th>10 Percentile Asset Value</th>\n' +
+            '                        <th>90 Percentile Asset Value</th>\n' +
+            '                    </tr>\n' +
+            '                    </thead>\n' +
+            '                    <tbody>');
+        $(tableData).each(function (i, rowData) {
+            var row = $('<tr></tr>');
+            $(rowData).each(function (j, cellData) {
+                row.append($('<td>'+cellData+'</td>'));
+            });
+            table.append(row);
+            table.append('</tbody></table>');
+        });
+        return table;
+    }
 
 
 </script>
-
-page renders
+</html>

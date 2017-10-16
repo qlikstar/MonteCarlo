@@ -6,6 +6,8 @@ import com.decipherx.fintech.montecarlo.Exception.MonteCarloException;
 import com.decipherx.fintech.montecarlo.enums.Portfolio;
 import com.decipherx.fintech.montecarlo.service.Distribution;
 import com.decipherx.fintech.montecarlo.service.Simulator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.Arrays;
 
 @Service
 public class SimulatorImpl implements Simulator {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private Distribution distribution;
@@ -25,26 +29,45 @@ public class SimulatorImpl implements Simulator {
 
     private Double[] iterationValues;
 
+    private Integer noOfYears = 20;
 
+    private Double[] listOfAllPercentiles;
+
+    public SimulatorImpl() {
+    }
 
     @Override
     public PortfolioResult processPortfolioInvestment(Double investedAmt, Portfolio portfolio){
 
         PortfolioResult portfolioResult = new PortfolioResult();
+        this.investedAmt = investedAmt;
+        this.portfolio = portfolio;
 
         try {
-            getAllIterations(investedAmt, portfolio);
-            portfolioResult.setPortfolio(portfolio);
+            getAllIterations(this.investedAmt, this.portfolio);
+            portfolioResult.setPortfolio(this.portfolio);
             portfolioResult.setMeanOfIterations(getMeanOfAllIterations());
             portfolioResult.setMedianOfIterations(getMedianOfAllIterations());
             portfolioResult.set10PercentileOfIterations(getPercentileOfAllIterations(10));
             portfolioResult.set90PercentileOfIterations(getPercentileOfAllIterations(90));
 
+            listOfAllPercentiles = new Double[9];
+            for ( int i=10; i<100; i=i+10 ){
+                listOfAllPercentiles[(i/10)-1] =  getPercentileOfAllIterations(i);
+            }
+            portfolioResult.setListOfAllPercentiles(listOfAllPercentiles);
+
         }catch (IllegalPercentileException iex){
             //TODO: Implement logger
-            System.out.println("Error: " + iex.getMessage());
+            logger.error("Error: " + iex.getMessage());
         }
         return portfolioResult;
+    }
+
+    @Override
+    public void getAllIterations(Double investedAmt, int noOfYears, Portfolio portfolio){
+        this.noOfYears = noOfYears;
+        getAllIterations(investedAmt,portfolio);
     }
 
     @Override
@@ -54,12 +77,14 @@ public class SimulatorImpl implements Simulator {
         this.portfolio = portfolio;
 
         iterationValues = new Double[iterations];
-        for (int i=0; i<iterations; i++) {
+        for (int i = 0; i < iterations; i++) {
 
-            distribution.processData(investedAmt, portfolio.getMean(), portfolio.getStandardDeviation());
-            iterationValues[i] =distribution.getFinalAssetValueEndOfPeriod();
+            distribution.processData(this.investedAmt, this.portfolio.getMean(), this.portfolio.getStandardDeviation(), this.noOfYears);
+            iterationValues[i] = distribution.getFinalAssetValueEndOfPeriod();
         }
-        Arrays.sort(iterationValues);
+        logger.info("values " + Arrays.toString(this.iterationValues) );
+        logger.info("length " + Integer.toString(this.iterationValues.length) + "--> "+ this.portfolio.getPortfolioName());
+        Arrays.sort(this.iterationValues);
 
     }
 

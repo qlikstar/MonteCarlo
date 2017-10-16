@@ -2,12 +2,16 @@ package com.decipherx.fintech.montecarlo.serviceimpl;
 
 import com.decipherx.fintech.montecarlo.service.Distribution;
 import org.apache.commons.math3.distribution.NormalDistribution;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
 @Service
 public class NormDistribution implements Distribution {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private Random random = new Random();
 
@@ -96,7 +100,7 @@ public class NormDistribution implements Distribution {
         Double amtAtYearEnd = currentAmount * (1+ risk);
 
         //Calculate actual value at Year end - (Inflation rate)
-        return amtAtYearEnd * (100/(100+inflationRate));
+        return amtAtYearEnd * ((Double) (100/(100+inflationRate)));
     }
 
     public static void main1(String[] args) {
