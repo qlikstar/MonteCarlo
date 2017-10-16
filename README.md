@@ -17,7 +17,7 @@ Portfolio Type					Aggressive		Very Conservative
 
 Return (Mean)					%9.4324			%6.189
 
-Risk ( Standard Deviation)		15.675			6.3438
+Risk ( Standard Deviation)      15.675			6.3438
 ```
 
 We would now like to compare their performance against each other. We would
@@ -87,5 +87,8 @@ Step 4 : Run the jar file
 $ java -jar target/montecarlo-0.0.1-SNAPSHOT.jar
 
 This should ideally start the Tomcat server at port 8080. You can also change the default port, if needed.
+
+Step 5 : Go to the url : http://localhost:8080/index  to view the graph
+
 ```
 --------------------------------------------------------------------------------------------
